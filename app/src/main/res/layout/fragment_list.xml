@@ -204,7 +204,8 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/listRv"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="wrap_content"
+        tools:listitem="@layout/expense_row_layout" />
     <RelativeLayout
         android:id="@+id/cardview"
         android:layout_width="match_parent"
