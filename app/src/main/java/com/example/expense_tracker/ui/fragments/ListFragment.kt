@@ -33,6 +33,9 @@ class ListFragment : Fragment() {
 
     private val expenseListadapter=ExpenseListAdapter()
 
+    private var totalExpense: Int = 0
+
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -70,6 +73,9 @@ class ListFragment : Fragment() {
     private fun observeExpenseLiveData() {
         listviewmodel.expenseList.observe(viewLifecycleOwner, Observer {
             expenseListadapter.setData(it)
+
+            totalExpense = it.sumOf { it.price }
+            binding.totalExpenseText.text = "Total Expense:"+ "$$totalExpense"
         })
     }
 
@@ -91,7 +97,7 @@ class ListFragment : Fragment() {
 
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
                 // Update the text view with the seekbar progress
-                seekbarTextView.text = "$progress"
+                seekbarTextView.text = "$"+"$progress"
             }
 
             override fun onStartTrackingTouch(seekBar: SeekBar?) {
@@ -114,6 +120,10 @@ class ListFragment : Fragment() {
             val expense=Expense(0,formattedDate,currentProgress.toInt())
             listviewmodel.insertExpense(expense)
             Log.d("viewmodel",""+expense)
+
+            totalExpense += expense.price
+            binding.totalExpenseText.text = "$$totalExpense"
+            Log.d("viewmodel", "$expense, totalExpense: $$totalExpense")
 
         }
 

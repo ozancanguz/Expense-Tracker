@@ -14,7 +14,7 @@ class ExpenseListAdapter: RecyclerView.Adapter<ExpenseListAdapter.ExpenseViewHol
         fun bind(expense: Expense) {
             binding.apply {
                 dateTv.text = expense.date
-                itemPrice.text = expense.price.toInt().toString()
+                itemPrice.text = "$"+expense.price.toInt().toString()
             }
         }
     }
