@@ -19,7 +19,7 @@ class ListViewModel@Inject constructor(private var repository: Repository,applic
 
 
     // insert expense
-    private fun insertExpense(expense: Expense){
+   fun insertExpense(expense: Expense){
         viewModelScope.launch {
             repository.local.insertExpense(expense)
         }

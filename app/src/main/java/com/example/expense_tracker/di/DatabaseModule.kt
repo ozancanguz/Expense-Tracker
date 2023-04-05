@@ -22,7 +22,7 @@ object DatabaseModule {
     ) = Room.databaseBuilder(
         context,
         ExpenseDatabase::class.java,
-        "product_database"
+        "expense_database"
     ).build()
 
 

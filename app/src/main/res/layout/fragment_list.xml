@@ -258,7 +258,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/seekbar"
             android:layout_centerHorizontal="true"
-            android:text="₺0"
+            android:text="0"
             android:textStyle="bold"
             android:textColor="@android:color/white"
             android:textSize="24sp" />

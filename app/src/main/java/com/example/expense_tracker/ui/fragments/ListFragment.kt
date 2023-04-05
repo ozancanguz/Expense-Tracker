@@ -4,15 +4,20 @@ import android.graphics.Color
 import android.graphics.PorterDuff
 import android.icu.util.Calendar
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.SeekBar
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.viewModels
 import com.example.expense_tracker.R
+import com.example.expense_tracker.data.entity.Expense
 import com.example.expense_tracker.databinding.FragmentListBinding
 import dagger.hilt.android.AndroidEntryPoint
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
 @AndroidEntryPoint
 class ListFragment : Fragment() {
@@ -20,6 +25,8 @@ class ListFragment : Fragment() {
     private var _binding: FragmentListBinding? = null
 
     private val binding get() = _binding!!
+
+    private val listviewmodel:ListViewModel by viewModels()
 
 
     override fun onCreateView(
@@ -46,6 +53,8 @@ class ListFragment : Fragment() {
 
     }
 
+
+
     private fun seekBar() {
         //-------------------------------
         val seekbar = binding.seekbar
@@ -56,7 +65,7 @@ class ListFragment : Fragment() {
 
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
                 // Update the text view with the seekbar progress
-                seekbarTextView.text = "₺$progress"
+                seekbarTextView.text = "$progress"
             }
 
             override fun onStartTrackingTouch(seekBar: SeekBar?) {
@@ -71,7 +80,14 @@ class ListFragment : Fragment() {
         addIcon.setOnClickListener {
             // Get the current value of the seekbar
             val currentProgress = seekbar.progress
-            // Do something with the currentProgress value, such as adding it to a database
+             // insert expense list to db
+            val currentDateTime = LocalDateTime.now()
+            val formatter = DateTimeFormatter.ofPattern("EEEE, MMMM d")
+            val formattedDate = currentDateTime.format(formatter)
+            println(formattedDate)
+            val expense=Expense(0,formattedDate,currentProgress.toInt())
+            listviewmodel.insertExpense(expense)
+            Log.d("viewmodel",""+expense)
 
         }
 
