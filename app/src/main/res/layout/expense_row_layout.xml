@@ -11,7 +11,7 @@
         android:layout_alignParentStart="true"
         android:layout_centerVertical="true"
         android:padding="16dp"
-        android:src="@drawable/ic_icon2" />
+        android:src="@drawable/icon3" />
 
     <!-- Text on the left side -->
     <TextView
@@ -20,8 +20,9 @@
         android:layout_height="wrap_content"
         android:layout_toEndOf="@id/item_icon"
         android:layout_centerVertical="true"
+        android:textStyle="bold"
         android:text="Expense date"
-        android:textSize="16sp" />
+        android:textSize="20sp" />
 
     <!-- Price on the right side -->
     <TextView
@@ -31,7 +32,8 @@
         android:layout_alignParentEnd="true"
         android:layout_centerVertical="true"
         android:padding="16dp"
+        android:textStyle="italic"
         android:text="Expense price"
-        android:textSize="16sp" />
+        android:textSize="20sp" />
 
 </RelativeLayout>

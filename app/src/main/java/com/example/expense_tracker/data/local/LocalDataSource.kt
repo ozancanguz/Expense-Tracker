@@ -18,4 +18,8 @@ class LocalDataSource@Inject constructor(private val expenseDao: ExpenseDao) {
     suspend fun deleteExpense(expense: Expense){
         return expenseDao.deleteExpense(expense)
     }
+
+    suspend fun deleteAllExpenses(){
+        return expenseDao.deleteAllExpenses()
+    }
 }

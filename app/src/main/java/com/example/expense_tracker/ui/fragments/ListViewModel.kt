@@ -26,12 +26,18 @@ class ListViewModel@Inject constructor(private var repository: Repository,applic
     }
 
     // delete expense
-    private fun deleteExpense(expense: Expense){
+     fun deleteExpense(expense: Expense){
         viewModelScope.launch {
             repository.local.deleteExpense(expense)
         }
     }
 
+    // delete all expenses
+     fun deleteAllExpenses(){
+        viewModelScope.launch {
+            repository.local.deleteAllExpenses()
+        }
+    }
 
 
 }

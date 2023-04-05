@@ -12,7 +12,10 @@ import android.view.ViewGroup
 import android.widget.SeekBar
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.expense_tracker.R
+import com.example.expense_tracker.adapters.ExpenseListAdapter
 import com.example.expense_tracker.data.entity.Expense
 import com.example.expense_tracker.databinding.FragmentListBinding
 import dagger.hilt.android.AndroidEntryPoint
@@ -27,6 +30,8 @@ class ListFragment : Fragment() {
     private val binding get() = _binding!!
 
     private val listviewmodel:ListViewModel by viewModels()
+
+    private val expenseListadapter=ExpenseListAdapter()
 
 
     override fun onCreateView(
@@ -47,11 +52,32 @@ class ListFragment : Fragment() {
       // seek bar functionality
         seekBar()
 
+        // setting up recyclerview
+        setupRv()
 
+        // observe live data
+        observeExpenseLiveData()
+
+
+        binding.totalExpenseText.setOnClickListener {
+            listviewmodel.deleteAllExpenses()
+        }
         return view
 
 
     }
+
+    private fun observeExpenseLiveData() {
+        listviewmodel.expenseList.observe(viewLifecycleOwner, Observer {
+            expenseListadapter.setData(it)
+        })
+    }
+
+    private fun setupRv() {
+        binding.listRv.layoutManager=LinearLayoutManager(requireContext())
+        binding.listRv.adapter=expenseListadapter
+    }
+
 
 
 

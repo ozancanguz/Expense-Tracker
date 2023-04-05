@@ -18,6 +18,8 @@ interface ExpenseDao {
     @Delete
     suspend fun deleteExpense(expense: Expense)
 
+    @Query("delete from expense_table")
+    suspend fun deleteAllExpenses()
 
 
 }
