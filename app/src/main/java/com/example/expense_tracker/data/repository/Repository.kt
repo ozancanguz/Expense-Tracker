@@ -1,4 +1,4 @@
-package com.example.expense_tracker.data
+package com.example.expense_tracker.data.repository
 
 import com.example.expense_tracker.data.local.LocalDataSource
 import dagger.hilt.android.scopes.ViewModelScoped
