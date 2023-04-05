@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.SeekBar
 import androidx.core.content.ContextCompat
 import com.example.expense_tracker.R
 import com.example.expense_tracker.databinding.FragmentListBinding
@@ -24,7 +25,7 @@ class ListFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
         _binding = FragmentListBinding.inflate(inflater, container, false)
         val view = binding.root
@@ -32,17 +33,61 @@ class ListFragment : Fragment() {
         // current day dot color change function
        currentDayChangeDot()
 
+        // expand - collapse card
+        expandCardView()
+
+
+      // seek bar functionality
+        seekBar()
+
+
+        return view
+
+
+    }
+
+    private fun seekBar() {
+        //-------------------------------
+        val seekbar = binding.seekbar
+        val seekbarTextView = binding.seekbarTextView
+        val addIcon=binding.addIcon
+
+        seekbar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+
+            override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
+                // Update the text view with the seekbar progress
+                seekbarTextView.text = "₺$progress"
+            }
+
+            override fun onStartTrackingTouch(seekBar: SeekBar?) {
+                // Do nothing
+            }
+
+            override fun onStopTrackingTouch(seekBar: SeekBar?) {
+                // Do nothing
+            }
+        })
+
+        addIcon.setOnClickListener {
+            // Get the current value of the seekbar
+            val currentProgress = seekbar.progress
+            // Do something with the currentProgress value, such as adding it to a database
+
+        }
+
+    }
+
+    private fun expandCardView(){
         val cardView = binding.cardview
         val seekBar = binding.seekbar
         val seekBarTextView = binding.seekbarTextView
         val addIcon = binding.addIcon
-
-// Set initial visibility of the seek bar and add icon to gone
+     // Set initial visibility of the seek bar and add icon to gone
         seekBar.visibility = View.GONE
         seekBarTextView.visibility = View.GONE
         addIcon.visibility = View.GONE
 
-// Set OnClickListener to the card view
+           // Set OnClickListener to the card view
         cardView.setOnClickListener {
             if (seekBar.visibility == View.GONE) {
                 // Expand the card view
@@ -56,11 +101,6 @@ class ListFragment : Fragment() {
                 addIcon.visibility = View.GONE
             }
         }
-
-
-        return view
-
-
     }
 
     private fun currentDayChangeDot() {
