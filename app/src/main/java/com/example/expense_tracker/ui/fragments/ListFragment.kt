@@ -32,6 +32,30 @@ class ListFragment : Fragment() {
         // current day dot color change function
        currentDayChangeDot()
 
+        val cardView = binding.cardview
+        val seekBar = binding.seekbar
+        val seekBarTextView = binding.seekbarTextView
+        val addIcon = binding.addIcon
+
+// Set initial visibility of the seek bar and add icon to gone
+        seekBar.visibility = View.GONE
+        seekBarTextView.visibility = View.GONE
+        addIcon.visibility = View.GONE
+
+// Set OnClickListener to the card view
+        cardView.setOnClickListener {
+            if (seekBar.visibility == View.GONE) {
+                // Expand the card view
+                seekBar.visibility = View.VISIBLE
+                seekBarTextView.visibility = View.VISIBLE
+                addIcon.visibility = View.VISIBLE
+            } else {
+                // Collapse the card view
+                seekBar.visibility = View.GONE
+                seekBarTextView.visibility = View.GONE
+                addIcon.visibility = View.GONE
+            }
+        }
 
 
         return view
@@ -53,9 +77,6 @@ class ListFragment : Fragment() {
             Calendar.THURSDAY -> binding.thursdayDot.setBackgroundResource(R.drawable.red_circle)
             Calendar.FRIDAY -> binding.fridayDot.setBackgroundResource(R.drawable.red_circle)
             Calendar.SATURDAY -> binding.saturdayDot.setBackgroundResource(R.drawable.red_circle)
-        }
-
-    }
-
+        } }
 
 }
