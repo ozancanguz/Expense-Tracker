@@ -276,8 +276,6 @@
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
             android:layout_below="@+id/seekbarTextView"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="16dp"
             android:layout_marginRight="16dp"
             android:contentDescription="Add Icon"
             app:tint="@color/white" />
