@@ -1,5 +1,6 @@
 package com.example.expense_tracker.ui.fragments
 
+import android.app.Activity
 import android.graphics.Color
 import android.graphics.PorterDuff
 import android.icu.util.Calendar
@@ -10,7 +11,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.SeekBar
-import androidx.core.content.ContextCompat
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -34,6 +35,22 @@ class ListFragment : Fragment() {
     private val expenseListadapter=ExpenseListAdapter()
 
     private var totalExpense: Int = 0
+
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+
+        val darkModeSwitch = binding.darkModeSwitch
+        darkModeSwitch.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked) {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+            } else {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+            }
+        }
+
+        super.onViewCreated(view, savedInstanceState)
+    }
+
 
 
 
@@ -65,10 +82,17 @@ class ListFragment : Fragment() {
         binding.totalExpenseText.setOnClickListener {
             listviewmodel.deleteAllExpenses()
         }
+
+
+
+
+
         return view
 
 
     }
+
+
 
     private fun observeExpenseLiveData() {
         listviewmodel.expenseList.observe(viewLifecycleOwner, Observer {
@@ -134,26 +158,44 @@ class ListFragment : Fragment() {
         val seekBar = binding.seekbar
         val seekBarTextView = binding.seekbarTextView
         val addIcon = binding.addIcon
-     // Set initial visibility of the seek bar and add icon to gone
+
+        // Set initial visibility of the seek bar and add icon to gone
         seekBar.visibility = View.GONE
         seekBarTextView.visibility = View.GONE
         addIcon.visibility = View.GONE
 
-           // Set OnClickListener to the card view
+        // Set OnClickListener to the card view
         cardView.setOnClickListener {
             if (seekBar.visibility == View.GONE) {
                 // Expand the card view
+                seekBar.translationY = seekBar.height.toFloat()
                 seekBar.visibility = View.VISIBLE
+                seekBar.animate().translationY(0f).setDuration(200).start()
+
+                seekBarTextView.translationY = seekBarTextView.height.toFloat()
                 seekBarTextView.visibility = View.VISIBLE
+                seekBarTextView.animate().translationY(0f).setDuration(200).start()
+
+                addIcon.translationY = addIcon.height.toFloat()
                 addIcon.visibility = View.VISIBLE
+                addIcon.animate().translationY(0f).setDuration(200).start()
             } else {
                 // Collapse the card view
-                seekBar.visibility = View.GONE
-                seekBarTextView.visibility = View.GONE
-                addIcon.visibility = View.GONE
+                seekBar.animate().translationY(seekBar.height.toFloat()).setDuration(200).withEndAction {
+                    seekBar.visibility = View.GONE
+                }.start()
+
+                seekBarTextView.animate().translationY(seekBarTextView.height.toFloat()).setDuration(200).withEndAction {
+                    seekBarTextView.visibility = View.GONE
+                }.start()
+
+                addIcon.animate().translationY(addIcon.height.toFloat()).setDuration(200).withEndAction {
+                    addIcon.visibility = View.GONE
+                }.start()
             }
         }
     }
+
 
     private fun currentDayChangeDot() {
         // Get the current day of the week (1 = Sunday, 2 = Monday, etc.)
