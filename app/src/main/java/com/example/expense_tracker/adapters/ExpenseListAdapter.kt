@@ -39,3 +39,5 @@ class ExpenseListAdapter: RecyclerView.Adapter<ExpenseListAdapter.ExpenseViewHol
         holder.bind(expenselist[position])
     }
 }
+
+

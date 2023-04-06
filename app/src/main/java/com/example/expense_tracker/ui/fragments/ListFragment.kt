@@ -11,14 +11,19 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.SeekBar
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.expense_tracker.R
 import com.example.expense_tracker.adapters.ExpenseListAdapter
+import com.example.expense_tracker.adapters.SwipeToDelete
 import com.example.expense_tracker.data.entity.Expense
 import com.example.expense_tracker.databinding.FragmentListBinding
+import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
@@ -106,6 +111,10 @@ class ListFragment : Fragment() {
     private fun setupRv() {
         binding.listRv.layoutManager=LinearLayoutManager(requireContext())
         binding.listRv.adapter=expenseListadapter
+
+        // swipe to delete
+        swipeToDelete(binding.listRv)
+
     }
 
 
@@ -212,5 +221,24 @@ class ListFragment : Fragment() {
             Calendar.FRIDAY -> binding.fridayDot.setBackgroundResource(R.drawable.red_circle)
             Calendar.SATURDAY -> binding.saturdayDot.setBackgroundResource(R.drawable.red_circle)
         } }
+
+
+    //swipe to delete
+    private fun swipeToDelete(recyclerView: RecyclerView) {
+
+        val swipeToDeleteCallback=object : SwipeToDelete(){
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                val itemtoDelete=expenseListadapter.expenselist[viewHolder.adapterPosition]
+                listviewmodel.deleteExpense(itemtoDelete)
+                Snackbar.make(requireView(), "Removed successfully", Snackbar.LENGTH_LONG).show();
+
+
+
+            }
+        }
+        val itemTouchHelper= ItemTouchHelper(swipeToDeleteCallback)
+        itemTouchHelper.attachToRecyclerView(recyclerView)
+    }
+
 
 }
