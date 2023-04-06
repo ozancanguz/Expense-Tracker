@@ -1,8 +1,11 @@
 # Expense-Tracker
 
--I have developed  a fully functional motivatational app. 
+-I have developed expense tracker android app using modern android languge Kotlin and jetpack libraries.
 
 # Demo
+
+![expense tracker demo](https://user-images.githubusercontent.com/64928807/230406938-03a7d43a-7a5e-41e4-a543-f6e09b5f7e89.gif)
+
 
 
 
